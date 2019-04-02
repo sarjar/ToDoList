@@ -26,11 +26,19 @@ public class ItemListItemListService extends ItemListServiceHelpers {
     }
 
     public void removeItemById(int id) {
-        for (Item itemId : itemList) {
-            if (itemId != null && id == itemId.getId()) {
-                itemList.remove(itemId);
+        Item itemToRemove = null;
+        for (Item item : itemList) {
+            if (id == item.getId()) {
+                itemToRemove = item;
             }
         }
+        if (itemToRemove != null) {
+            itemList.remove(itemToRemove);
+        }
+    }
+
+    public void clearCompletedItems() {
+
     }
 
     public void clearItemList() {
@@ -45,8 +53,6 @@ public class ItemListItemListService extends ItemListServiceHelpers {
         for (Item item : itemList) {
             if (item != null && id == item.getId()) {
                 printItem(item);
-            } else {
-                System.out.println("Item does not exist");
             }
         }
     }
