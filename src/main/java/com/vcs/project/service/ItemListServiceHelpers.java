@@ -14,8 +14,7 @@ public class ItemListServiceHelpers {
 
     public void printItem(Item item) {
         System.out.println("ID: " + item.getId() +
-                " | Title: " + item.getTitle() +
-                " | Desc: " + item.getDescription() +
+                " | Description: " + item.getDescription() +
                 " | Submitted Date: " + item.getSubmittedDate() +
                 " | Status: " + setItemStatus(item.isCompleted()) +
                 " | Priority: " + item.getItemPriority());

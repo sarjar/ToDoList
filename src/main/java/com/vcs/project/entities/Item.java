@@ -5,16 +5,14 @@ import java.time.LocalDate;
 public class Item {
 
     private int id;
-    private String title;
     private String description;
     private LocalDate submittedDate;
     private boolean isCompleted;
     private ItemPriority itemPriority;
 
-    public Item(int id, String title, String description, LocalDate submittedDate,
+    public Item(int id, String description, LocalDate submittedDate,
                 boolean isCompleted, ItemPriority itemPriority) {
         this.id = id;
-        this.title = title;
         this.description = description;
         this.submittedDate = submittedDate;
         this.isCompleted = isCompleted;
@@ -25,14 +23,6 @@ public class Item {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {

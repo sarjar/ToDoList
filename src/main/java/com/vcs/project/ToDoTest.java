@@ -13,10 +13,10 @@ public class ToDoTest {
 
         ItemListItemListService toDoList = new ItemListItemListService();
 
-        toDoList.addItem(1, "Clean stuff", null, submittedDate.plusDays(7), false, ItemPriority.Medium);
-        toDoList.addItem(2, "Needs to buy", "Milk, not milk, smth", null, false, ItemPriority.Medium);
-        toDoList.addItem(3, "Call the doctor", null, submittedDate.plusDays(2), false, ItemPriority.High);
-        toDoList.addItem(4, "Wash dishes", "Only half", submittedDate.plusDays(2), false, ItemPriority.Low);
+        toDoList.addItem(1, "Clean stuff", submittedDate.plusDays(7), false, ItemPriority.Medium);
+        toDoList.addItem(2, "Buy: milk, bread, sugar.", null,false, ItemPriority.Medium);
+        toDoList.addItem(3, "Call the doctor", submittedDate.plusDays(2), false, ItemPriority.High);
+        toDoList.addItem(4, "Wash dishes", submittedDate.plusDays(2), false, ItemPriority.Low);
 
 
 //        Change Item Status

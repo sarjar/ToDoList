@@ -11,9 +11,9 @@ public class ItemListItemListService extends ItemListServiceHelpers {
 
     List<Item> itemList = new ArrayList<>();
 
-    public void addItem(int id, String title, String desc, LocalDate submittedDate,
+    public void addItem(int id, String desc, LocalDate submittedDate,
                         boolean isCompleted, ItemPriority itemPriority) {
-        Item item = new Item(id, title, desc, submittedDate, isCompleted, itemPriority);
+        Item item = new Item(id, desc, submittedDate, isCompleted, itemPriority);
         itemList.add(item);
     }
 
