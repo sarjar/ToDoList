@@ -1,7 +1,7 @@
 package com.vcs.project;
 
-import com.vcs.project.entities.ItemPriority;
-import com.vcs.project.service.ItemListItemListService;
+import com.vcs.project.entities.enums.ItemPriority;
+import com.vcs.project.service.ItemListService;
 
 import java.time.LocalDate;
 
@@ -11,7 +11,7 @@ public class ToDoApp {
 
         LocalDate submittedDate = LocalDate.now();
 
-        ItemListItemListService toDoList = new ItemListItemListService();
+        ItemListService toDoList = new ItemListService();
 
         toDoList.addItem(1, "Clean stuff", submittedDate.plusDays(7), false, ItemPriority.Medium);
         toDoList.addItem(2, "Buy: milk, bread, sugar.", null, false, ItemPriority.Medium);
@@ -25,8 +25,8 @@ public class ToDoApp {
 //        toDoList.displayItemById(2);
 
 //        Remove Item By Given Id
-        toDoList.removeItemById(1);
-        toDoList.displayToDoList();
+//        toDoList.removeItemById(1);
+//        toDoList.displayToDoList();
 
 //        Clear To Do List
 //        toDoList.clearItemList();

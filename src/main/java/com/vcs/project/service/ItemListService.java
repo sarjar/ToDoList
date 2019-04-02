@@ -1,13 +1,14 @@
 package com.vcs.project.service;
 
 import com.vcs.project.entities.Item;
-import com.vcs.project.entities.ItemPriority;
+import com.vcs.project.entities.enums.ItemPriority;
+import com.vcs.project.service.helpers.ItemListServiceHelpers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemListItemListService extends ItemListServiceHelpers {
+public class ItemListService extends ItemListServiceHelpers {
 
     List<Item> itemList = new ArrayList<>();
 

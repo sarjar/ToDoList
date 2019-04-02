@@ -1,4 +1,4 @@
-package com.vcs.project.service;
+package com.vcs.project.service.helpers;
 
 import com.vcs.project.entities.Item;
 

@@ -1,5 +1,7 @@
 package com.vcs.project.entities;
 
+import com.vcs.project.entities.enums.ItemPriority;
+
 import java.time.LocalDate;
 
 public class Item {
