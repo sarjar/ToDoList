@@ -2,66 +2,48 @@ package com.vcs.project.service;
 
 import com.vcs.project.entities.Item;
 import com.vcs.project.entities.enums.ItemPriority;
-import com.vcs.project.service.helpers.ItemListServiceHelpers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class ItemListService extends ItemListServiceHelpers {
+public class ItemListService extends ItemListDao {
 
-    List<Item> itemList = new ArrayList<>();
+    //TODO: pasigilinti i Map funkcionaluma.
+    private Map<Integer, Item> itemsByKey = null;
 
-    public void addItem(int id, String desc, LocalDate submittedDate,
-                        boolean isCompleted, ItemPriority itemPriority) {
-        Item item = new Item(id, desc, submittedDate, isCompleted, itemPriority);
-        itemList.add(item);
+    public void test() {
+        System.out.println(getItemList());
     }
 
     public void changeItemStatus(int id) {
-        itemList.get(id - 1).setCompleted(true);
+        System.out.println(getItemList());
+        getItemList().get(id - 1).setCompleted(true);
     }
 
-    public void sortItemList() {
+//    //TODO: Kodel ir kas yra SortType.
+//    public List<Item> sortItemList(SortType type) {
+//
+//        List<Item> result = new ArrayList<>(itemList);
+//
+//        if (SortType.ByPriority.equals(type)) {
+//
+//            Collections.sort(result, new Comparator<Item>() {
+//                @Override
+//                public int compare(Item o1, Item o2) {
+//                    return result;
+//                }
+//            });
+//        }
+//    }
 
-    }
-
-    public void removeItemById(int id) {
-        Item itemToRemove = null;
-        for (Item item : itemList) {
-            if (id == item.getId()) {
-                itemToRemove = item;
-            }
+    public List<Item> clearItemList(boolean clearCompleted) {
+        List<Item> completedItems = new ArrayList<>();
+        if (clearCompleted) {
+            completedItems = removeCompletedItems();
+        } else {
+            itemsByKey.clear();
         }
-        if (itemToRemove != null) {
-            itemList.remove(itemToRemove);
-        }
-    }
-
-    public void clearCompletedItems() {
-
-    }
-
-    public void clearItemList() {
-        itemList.clear();
-        if (!itemList.isEmpty()) {
-            System.out.println("ToDo List is not empty");
-        }
-        System.out.println("ToDo List is empty");
-    }
-
-    public void displayItemById(int id) {
-        for (Item item : itemList) {
-            if (item != null && id == item.getId()) {
-                printItem(item);
-            }
-        }
-    }
-
-    public void displayToDoList() {
-        for (Item item : itemList) {
-            printItem(item);
-        }
+        return completedItems;
     }
 
 }

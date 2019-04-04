@@ -9,15 +9,15 @@ public class Item {
     private int id;
     private String description;
     private LocalDate submittedDate;
-    private boolean isCompleted;
+    private boolean completed;
     private ItemPriority itemPriority;
 
     public Item(int id, String description, LocalDate submittedDate,
-                boolean isCompleted, ItemPriority itemPriority) {
+                boolean completed, ItemPriority itemPriority) {
         this.id = id;
         this.description = description;
         this.submittedDate = submittedDate;
-        this.isCompleted = isCompleted;
+        this.completed = completed;
         this.itemPriority = itemPriority;
     }
 
@@ -43,13 +43,9 @@ public class Item {
         this.submittedDate = submittedDate;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
-    }
+    public boolean isCompleted() { return completed; }
 
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
-    }
+    public void setCompleted(boolean completed) { this.completed = completed; }
 
     public ItemPriority getItemPriority() {
         return itemPriority;
@@ -58,5 +54,9 @@ public class Item {
     public void setItemPriority(ItemPriority itemPriority) {
         this.itemPriority = itemPriority;
     }
+
+    @Override
+    public String toString() {
+        return id + " " + description + " " + submittedDate + " " + completed + " " + itemPriority;}
 
 }

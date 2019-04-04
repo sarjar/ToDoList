@@ -18,6 +18,10 @@ public class ToDoApp {
         toDoList.addItem(3, "Call the doctor", submittedDate.plusDays(2), false, ItemPriority.High);
         toDoList.addItem(4, "Wash dishes", submittedDate.plusDays(2), false, ItemPriority.Low);
 
+//        System.out.println(toDoList.getItemList());
+//        toDoList.changeItemStatus(2);
+//        toDoList.clearItemList(true);
+//        System.out.println(toDoList.getItemList());
 
 //        Change Item Status
 //        toDoList.displayItemById(2);
