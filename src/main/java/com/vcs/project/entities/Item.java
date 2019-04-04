@@ -6,13 +6,13 @@ import java.time.LocalDate;
 
 public class Item {
 
-    private int id;
+    private Integer id;
     private String description;
     private LocalDate submittedDate;
     private boolean completed;
     private ItemPriority itemPriority;
 
-    public Item(int id, String description, LocalDate submittedDate,
+    public Item(Integer id, String description, LocalDate submittedDate,
                 boolean completed, ItemPriority itemPriority) {
         this.id = id;
         this.description = description;
@@ -21,9 +21,11 @@ public class Item {
         this.itemPriority = itemPriority;
     }
 
-    public int getId() { return id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,9 +45,13 @@ public class Item {
         this.submittedDate = submittedDate;
     }
 
-    public boolean isCompleted() { return completed; }
+    public boolean isCompleted() {
+        return completed;
+    }
 
-    public void setCompleted(boolean completed) { this.completed = completed; }
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 
     public ItemPriority getItemPriority() {
         return itemPriority;
@@ -57,6 +63,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return id + " " + description + " " + submittedDate + " " + completed + " " + itemPriority;}
+        return id + " " + description + " " + submittedDate + " " + completed + " " + itemPriority;
+    }
 
 }

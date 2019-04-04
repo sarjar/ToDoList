@@ -6,16 +6,16 @@ import java.util.List;
 
 public interface IItemListDao {
 
-    void addItem();
+    // CRUD
 
-    List<Item> getItem();
+    List<Item> getItemList();
 
-    List<Item> getAllItemList();
+    Item getItemById(int id);
 
-    List<Item> getCompletedItems();
+    Item createItem(Item item);
 
-    void updateItemById();
+    boolean updateItem(int id, Item item);
 
-    void removeItemById();
+    boolean removeById(int id);
 
 }

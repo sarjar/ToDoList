@@ -1,45 +1,58 @@
 package com.vcs.project.service;
 
 import com.vcs.project.entities.Item;
-import com.vcs.project.entities.enums.ItemPriority;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class ItemListDao {
+import static com.vcs.project.service.utils.ItemListUtils.generateId;
 
-    //TODO: pasigilinti i Map funkcionaluma.
-    private Map<Integer, Item> itemsByKey = null;
+public class ItemListDao implements IItemListDao {
 
     private List<Item> itemList = new ArrayList<>();
 
-    public List<Item> addItem(int id, String description, LocalDate submittedDate,
-                              boolean completed, ItemPriority itemPriority) {
-
-        itemList.add(new Item(id, description, submittedDate, completed, itemPriority));
-        return itemList;
-    }
-
+    @Override
     public List<Item> getItemList() {
         return itemList;
     }
 
-    public List<Item> removeCompletedItems() {
-        List<Item> completedItems = itemList;
-        for (Item item : completedItems) {
-            if (item.isCompleted() && !item.equals(null)) {
-                completedItems.remove(item);
+    @Override
+    public Item getItemById(int id) {
+        for (Item item : itemList) {
+            if (item.getId() == id) {
+                return item;
             }
         }
-        return completedItems;
+        return null;
     }
 
-    public void updateItemById(int id) {
+    @Override
+    public Item createItem(Item item) {
+        item.setId(generateId());
+        itemList.add(item);
+        return item;
     }
 
-    public void removeItemById(int id) {
-        itemsByKey.remove(id);
+    @Override
+    public boolean updateItem(int id, Item item) {
+        Item itemForUpdate = getItemById(id);
+        if (itemForUpdate == null) {
+            return false;
+        }
+        itemForUpdate.setDescription(item.getDescription());
+        itemForUpdate.setSubmittedDate(item.getSubmittedDate());
+        itemForUpdate.setCompleted(item.isCompleted());
+        itemForUpdate.setItemPriority(item.getItemPriority());
+        return true;
+    }
+
+    @Override
+    public boolean removeById(int id) {
+        for (int i = 0; i < itemList.size(); i++) {
+            if (itemList.get(i).getId() == id) {
+                return itemList.remove(i) != null;
+            }
+        }
+        return false;
     }
 }

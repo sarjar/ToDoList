@@ -1,23 +1,16 @@
 package com.vcs.project.service;
 
 import com.vcs.project.entities.Item;
-import com.vcs.project.entities.enums.ItemPriority;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ItemListService extends ItemListDao {
+public class ItemListService {
 
-    //TODO: pasigilinti i Map funkcionaluma.
-    private Map<Integer, Item> itemsByKey = null;
-
-    public void test() {
-        System.out.println(getItemList());
-    }
+    ItemListDao toDo = new ItemListDao();
 
     public void changeItemStatus(int id) {
-        System.out.println(getItemList());
-        getItemList().get(id - 1).setCompleted(true);
+        toDo.getItemById(id).setCompleted(true);
     }
 
 //    //TODO: Kodel ir kas yra SortType.
@@ -36,14 +29,15 @@ public class ItemListService extends ItemListDao {
 //        }
 //    }
 
-    public List<Item> clearItemList(boolean clearCompleted) {
-        List<Item> completedItems = new ArrayList<>();
-        if (clearCompleted) {
-            completedItems = removeCompletedItems();
-        } else {
-            itemsByKey.clear();
+    public void clearItemList() {
+        toDo.getItemList().clear();
+    }
+
+    public void removeCompletedItem(int id) {
+        Item itemToCheck = toDo.getItemById(id);
+        if (itemToCheck.isCompleted() && !itemToCheck.equals(null)) {
+            toDo.removeById(id);
         }
-        return completedItems;
     }
 
 }
