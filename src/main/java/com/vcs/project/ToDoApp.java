@@ -21,5 +21,13 @@ public class ToDoApp {
         dao.createItem(new Item(3, "Call the doctor", submittedDate.plusDays(2), false, ItemPriority.High));
         dao.createItem(new Item(4, "Wash dishes", submittedDate.plusDays(2), false, ItemPriority.Low));
 
+//        service.changeItemStatus(3);
+//        service.changeItemStatus(dao.getItemById(3));
+
+//        service.printInfo(dao.getItemList());
+
+        service.printInfo(service.sortItemList(dao.getItemList(),
+                true, true, true));
+
     }
 }
