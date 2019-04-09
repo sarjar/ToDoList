@@ -54,7 +54,6 @@ public class ItemListService {
         }
     }
 
-
     public int getItemIndex(Item item) {
         return dao.getItemList().indexOf(item);
     }
