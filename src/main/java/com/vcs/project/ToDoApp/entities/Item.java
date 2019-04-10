@@ -1,31 +1,38 @@
-package com.vcs.project.entities;
+package com.vcs.project.ToDoApp.entities;
 
-import com.vcs.project.entities.enums.ItemPriority;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
+@Entity
 public class Item {
 
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @NotBlank
     private String description;
+
+    //TODO: Kokia anotacija, jei gali buti null?
     private LocalDate submittedDate;
+
+    @NotBlank
     private boolean completed;
+
+    //TODO: Kokia anotacija, jei gali buti null?
     private ItemPriority itemPriority;
 
-    public Item(Integer id, String description, LocalDate submittedDate,
-                boolean completed, ItemPriority itemPriority) {
-        this.id = id;
-        this.description = description;
-        this.submittedDate = submittedDate;
-        this.completed = completed;
-        this.itemPriority = itemPriority;
-    }
+    //TODO: Ar reikia Constructor'iu?
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,11 +66,6 @@ public class Item {
 
     public void setItemPriority(ItemPriority itemPriority) {
         this.itemPriority = itemPriority;
-    }
-
-    @Override
-    public String toString() {
-        return id + " " + description + " " + submittedDate + " " + completed + " " + itemPriority;
     }
 
 }

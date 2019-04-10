@@ -1,4 +1,4 @@
-package com.vcs.project.entities.enums;
+package com.vcs.project.ToDoApp.entities;
 
 public enum ItemPriority {
     High, Medium, Low
