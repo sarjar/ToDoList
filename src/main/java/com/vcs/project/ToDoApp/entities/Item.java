@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 
 @Entity
 public class Item {
@@ -13,16 +12,13 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @NotBlank
     private String description;
-
-    private LocalDate submittedDate;
-
+    private String submittedDate;
     @NotBlank
     private boolean completed;
-
     private ItemPriority itemPriority;
+
 
     public Long getId() {
         return id;
@@ -40,11 +36,11 @@ public class Item {
         this.description = description;
     }
 
-    public LocalDate getSubmittedDate() {
+    public String getSubmittedDate() {
         return submittedDate;
     }
 
-    public void setSubmittedDate(LocalDate submittedDate) {
+    public void setSubmittedDate(String submittedDate) {
         this.submittedDate = submittedDate;
     }
 

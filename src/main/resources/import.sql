@@ -1,4 +1,2 @@
-
-insert into item (id, description, submittedDate, completed, itemPriority) values (null, 'Clean room', null, 'false', null);
-insert into item (id, description, submittedDate, completed, itemPriority) values (null, 'Wash Car', null, 'false', null);
-
+insert into item (id, description, submittedDate, completed, itemPriority) values (null, 'Clean room', '2019/04/20', 'FALSE', 1);
+insert into item (id, description, submittedDate, completed, itemPriority) values (null, 'Wash Car', '2019/06/01', 'FALSE', 2);

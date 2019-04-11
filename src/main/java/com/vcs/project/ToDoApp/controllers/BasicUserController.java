@@ -16,8 +16,7 @@ public class BasicUserController {
 
     private final static Logger LOG = LoggerFactory.getLogger(BasicUserController.class);
 
-
-    @Autowired(required=false)
+    @Autowired
     private IToDoListBasicService basicService;
 
     @PostMapping("/items")

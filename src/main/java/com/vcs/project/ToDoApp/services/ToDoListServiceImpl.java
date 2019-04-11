@@ -4,10 +4,11 @@ import com.vcs.project.ToDoApp.entities.Item;
 import com.vcs.project.ToDoApp.entities.ItemPriority;
 import com.vcs.project.ToDoApp.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 
+@Service
 public class ToDoListServiceImpl implements IToDoListService {
 
     @Autowired
@@ -78,7 +79,7 @@ public class ToDoListServiceImpl implements IToDoListService {
 
     //TODO Optional<Item> ar Item?
     @Override
-    public boolean update(long id, String desc, LocalDate subDate, boolean completed, ItemPriority priority) {
+    public boolean update(long id, String desc, String subDate, boolean completed, ItemPriority priority) {
 
         Optional<Item> item = itemRepository.findById(id);
 
