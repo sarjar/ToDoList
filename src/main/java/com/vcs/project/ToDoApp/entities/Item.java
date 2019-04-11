@@ -17,16 +17,12 @@ public class Item {
     @NotBlank
     private String description;
 
-    //TODO: Kokia anotacija, jei gali buti null?
     private LocalDate submittedDate;
 
     @NotBlank
     private boolean completed;
 
-    //TODO: Kokia anotacija, jei gali buti null?
     private ItemPriority itemPriority;
-
-    //TODO: Ar reikia Constructor'iu?
 
     public Long getId() {
         return id;

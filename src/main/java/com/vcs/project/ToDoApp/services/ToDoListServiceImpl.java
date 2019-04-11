@@ -1,46 +1,63 @@
 package com.vcs.project.ToDoApp.services;
 
 import com.vcs.project.ToDoApp.entities.Item;
+import com.vcs.project.ToDoApp.entities.ItemPriority;
 import com.vcs.project.ToDoApp.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
-@Service
 public class ToDoListServiceImpl implements IToDoListService {
 
     @Autowired
     private ItemRepository itemRepository;
 
-    private ToDoListDaoImpl toDoListDao = new ToDoListDaoImpl();
-
     @Override
-    public Optional<Item> findById(Long id) {
-        return itemRepository.findById(id);
+    public Item save(Item item) {
+        return itemRepository.save(item);
     }
 
+    @Override
+    public List<Item> getAll() {
+        List<Item> itemList = new ArrayList<>();
+        for (Item item : itemRepository.findAll()) {
+            itemList.add(item);
+        }
+        return itemList;
+    }
+
+    @Override
+    public void delete(Long id) {
+        itemRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll(List<Item> items) {
+        itemRepository.deleteAll(items);
+    }
+
+    //TODO: Paklausti, ar torkiu paciu principu ir sorta apsiprasyti? Pvz metodas sortByPriority
     @Override
     public List<Item> findByDescription(String description) {
-        return null;
+        return itemRepository.findByDescriptionContainingIgnoreCase(description);
     }
 
+    //TODO: sutvarkyti methoda
     @Override
-    public List<Item> sortItemList(List<Item> itemList, boolean orderByIndex, boolean orderByPriority,
-                                   boolean reverseList) {
+    public List<Item> sortItemListByIndexOrPriority(List<Item> itemList,
+                                boolean orderByIndex, boolean orderByPriority, boolean reverseList) {
 
         List<Item> result = new ArrayList<>(itemList);
+
         if (orderByIndex && !orderByPriority) {
-            Collections.sort(result, (o1, o2) -> sortListByIndex(o1, o2));
+            Collections.sort(result, Comparator.comparingInt(result::indexOf));
         } else if (orderByPriority && !orderByIndex) {
-            Collections.sort(result, (o1, o2) -> sortListByPriority(o1, o2));
+            Collections.sort(result, (o1, o2) -> sortListByPriority(result, o1, o2));
         } else if (orderByPriority && orderByIndex) {
             Collections.sort(result, (o1, o2) -> {
-                int flag = sortListByIndex(o1, o2);
-                if (flag == 0) flag = sortListByPriority(o1, o2);
+                int flag = result.indexOf(o1) - result.indexOf(o2);
+                if (flag == 0) flag = sortListByPriority(result, o1, o2);
                 return flag;
             });
         }
@@ -51,46 +68,31 @@ public class ToDoListServiceImpl implements IToDoListService {
     }
 
     @Override
-    public int sortListByIndex(Item o1, Item o2) {
-        int itemIndex1 = getItemIndex(itemRepository.findById(o1.getId()));
-        int itemIndex2 = getItemIndex(itemRepository.findById(o2.getId()));
-        return itemIndex1 - itemIndex2;
-    }
-
-    @Override
-    public int sortListByPriority(Item o1, Item o2) {
+    public int sortListByPriority(List<Item> itemList, Item o1, Item o2) {
         if (o1.getItemPriority() == o2.getItemPriority()) {
-            return sortListByIndex(o1, o2);
+            return itemList.indexOf(o1) - itemList.indexOf(o2);
         } else {
             return o1.getItemPriority().compareTo(o2.getItemPriority());
         }
     }
 
+    //TODO Optional<Item> ar Item?
     @Override
-    public int getItemIndex(Optional<Item> item) {
-        return toDoListDao.getAll().indexOf(item);
-    }
+    public boolean update(long id, String desc, LocalDate subDate, boolean completed, ItemPriority priority) {
 
-    @Override
-    public Item findByIndex(int index) {
-        return toDoListDao.getAll().get(index);
-    }
-
-    @Override
-    public boolean update(long id, Item item) {
-        return false;
-    }
-
-    @Override
-    public boolean changeItemStatus(long id) {
         Optional<Item> item = itemRepository.findById(id);
+
         if (item.isPresent()) {
-            itemRepository.findById(id).get().setCompleted(true);
+            itemRepository.findById(id).get().setDescription(desc);
+            itemRepository.findById(id).get().setSubmittedDate(subDate);
+            itemRepository.findById(id).get().setCompleted(completed);
+            itemRepository.findById(id).get().setItemPriority(priority);
             return true;
         }
         return false;
     }
 
+    //TODO: Optional<Item> ar Item?
     @Override
     public boolean removeCompletedItem(long id) {
         Optional<Item> item = itemRepository.findById(id);

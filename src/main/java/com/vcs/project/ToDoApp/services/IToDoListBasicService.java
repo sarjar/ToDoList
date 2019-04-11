@@ -4,7 +4,7 @@ import com.vcs.project.ToDoApp.entities.Item;
 
 import java.util.List;
 
-public interface IToDoListDao {
+public interface IToDoListBasicService {
 
     Item save(Item item);
 
