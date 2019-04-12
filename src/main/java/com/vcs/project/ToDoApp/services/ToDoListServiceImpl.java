@@ -1,12 +1,13 @@
 package com.vcs.project.ToDoApp.services;
 
 import com.vcs.project.ToDoApp.entities.Item;
-import com.vcs.project.ToDoApp.entities.ItemPriority;
 import com.vcs.project.ToDoApp.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ToDoListServiceImpl implements IToDoListService {
@@ -17,6 +18,11 @@ public class ToDoListServiceImpl implements IToDoListService {
     @Override
     public Item save(Item item) {
         return itemRepository.save(item);
+    }
+
+    @Override
+    public Optional<Item> findById(Long id) {
+        return itemRepository.findById(id);
     }
 
     @Override
@@ -38,69 +44,45 @@ public class ToDoListServiceImpl implements IToDoListService {
         itemRepository.deleteAll(items);
     }
 
-    //TODO: Paklausti, ar torkiu paciu principu ir sorta apsiprasyti? Pvz metodas sortByPriority
     @Override
-    public List<Item> findByDescription(String description) {
-        return itemRepository.findByDescriptionContainingIgnoreCase(description);
-    }
-
-    //TODO: sutvarkyti methoda
-    @Override
-    public List<Item> sortItemListByIndexOrPriority(List<Item> itemList,
-                                boolean orderByIndex, boolean orderByPriority, boolean reverseList) {
-
-        List<Item> result = new ArrayList<>(itemList);
-
-        if (orderByIndex && !orderByPriority) {
-            Collections.sort(result, Comparator.comparingInt(result::indexOf));
-        } else if (orderByPriority && !orderByIndex) {
-            Collections.sort(result, (o1, o2) -> sortListByPriority(result, o1, o2));
-        } else if (orderByPriority && orderByIndex) {
-            Collections.sort(result, (o1, o2) -> {
-                int flag = result.indexOf(o1) - result.indexOf(o2);
-                if (flag == 0) flag = sortListByPriority(result, o1, o2);
-                return flag;
-            });
-        }
-        if (reverseList) {
-            Collections.reverse(result);
-        }
-        return result;
+    public List<Item> findByHashTag(String hashTag) {
+        return itemRepository.findByHashTagContainingIgnoreCase(hashTag);
     }
 
     @Override
-    public int sortListByPriority(List<Item> itemList, Item o1, Item o2) {
-        if (o1.getItemPriority() == o2.getItemPriority()) {
-            return itemList.indexOf(o1) - itemList.indexOf(o2);
-        } else {
-            return o1.getItemPriority().compareTo(o2.getItemPriority());
-        }
+    public List<Item> sortListById(boolean ascending) {
+        return !ascending ? itemRepository.orderByIdDesc() : itemRepository.orderByIdAsc();
     }
 
-    //TODO Optional<Item> ar Item?
     @Override
-    public boolean update(long id, String desc, String subDate, boolean completed, ItemPriority priority) {
-
-        Optional<Item> item = itemRepository.findById(id);
-
-        if (item.isPresent()) {
-            itemRepository.findById(id).get().setDescription(desc);
-            itemRepository.findById(id).get().setSubmittedDate(subDate);
-            itemRepository.findById(id).get().setCompleted(completed);
-            itemRepository.findById(id).get().setItemPriority(priority);
-            return true;
-        }
-        return false;
+    public List<Item> sortListByItemPriority(boolean ascending) {
+        return !ascending ? itemRepository.orderByItemPriorityDesc() : itemRepository.orderByItemPriorityAsc();
     }
 
-    //TODO: Optional<Item> ar Item?
     @Override
-    public boolean removeCompletedItem(long id) {
-        Optional<Item> item = itemRepository.findById(id);
-        if (item.isPresent() && item.get().isCompleted()) {
-            itemRepository.deleteById(id);
-            return true;
+    public Item update(Item itemForUpd) {
+        Optional<Item> itemFromDb = itemRepository.findById(itemForUpd.getId());
+
+        if (itemFromDb.isPresent()) {
+            itemFromDb.get().setDescription(itemForUpd.getDescription());
+            itemFromDb.get().setItemPriority(itemForUpd.getItemPriority());
+            itemFromDb.get().setHashTag(itemForUpd.getHashTag());
+            itemFromDb.get().setCompleted(itemForUpd.isCompleted());
+            return itemRepository.save(itemFromDb.get());
         }
-        return false;
+        throw new RuntimeException("Not found by ID: " + itemForUpd.getId());
+    }
+
+    @Override
+    public List<Item> cleanItemList(boolean onlyCompleted, boolean allList) {
+        List<Item> itemList = getAll();
+        for (Item item : itemList) {
+            if (onlyCompleted && item.isCompleted() && !item.equals(null)) {
+                delete(item.getId());
+            } else if (allList) {
+                deleteAll(itemList);
+            }
+        }
+        return itemList;
     }
 }

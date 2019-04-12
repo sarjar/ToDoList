@@ -1,2 +1,3 @@
-insert into item (id, description, submittedDate, completed, itemPriority) values (null, 'Clean room', '2019/04/20', 'FALSE', 1);
-insert into item (id, description, submittedDate, completed, itemPriority) values (null, 'Wash Car', '2019/06/01', 'FALSE', 2);
+insert into item (id, description, PRIORITY, HASH_TAG, completed) values (null, 'Clean room', 1, null, 'FALSE');
+insert into item (id, description, PRIORITY, HASH_TAG, completed) values (null, 'Wash car', 2, 'WEEKEND', 'FALSE');
+insert into item (id, description, PRIORITY, HASH_TAG, completed) values (null, 'Buy soap', 0, 'SHOP', 'FALSE');

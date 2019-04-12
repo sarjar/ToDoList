@@ -9,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/user/list")
+@RequestMapping("/list/menu/basic")
 public class BasicUserController {
 
     private final static Logger LOG = LoggerFactory.getLogger(BasicUserController.class);
@@ -19,25 +20,32 @@ public class BasicUserController {
     @Autowired
     private IToDoListBasicService basicService;
 
-    @PostMapping("/items")
+    @GetMapping("/item/{id}")
+    public Item getItemById(@PathVariable("id") Long id) {
+        LOG.info("Started Getting Item by Id");
+        Optional<Item> itemOpt = basicService.findById(id);
+        return itemOpt.isPresent() ? itemOpt.get() : null;
+    }
+
+    @GetMapping("/items")
     public List<Item> getAll() {
-        LOG.info("Getting All (Started)");
+        LOG.info("Started Getting All");
         List<Item> itemList = basicService.getAll();
-        LOG.info("Getting All (Finished) Total Items: {}", itemList.size());
+        LOG.info("Total Items: {}", itemList.size());
         return itemList;
     }
 
     @PostMapping("/add/item")
     public Item addItem(@RequestBody Item item) {
-        LOG.info("Add Item (Started)");
+        LOG.info("Started Adding Item");
         Item addedItem = basicService.save(item);
-        LOG.info("Item Added (Finished). ID: {}", addedItem.getId());
+        LOG.info("Item Added. ID: {}", addedItem.getId());
         return addedItem;
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> removeById(@PathVariable("id") Long id) {
-        LOG.info("Item deleting by id: {}", id);
+        LOG.info("Item's deleting by id: {}", id);
         basicService.delete(id);
         return ResponseEntity.ok().build();
     }

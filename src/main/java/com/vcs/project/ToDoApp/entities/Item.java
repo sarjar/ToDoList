@@ -1,9 +1,6 @@
 package com.vcs.project.ToDoApp.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -14,11 +11,21 @@ public class Item {
     private Long id;
     @NotBlank
     private String description;
-    private String submittedDate;
-    @NotBlank
-    private boolean completed;
+    @Column(name = "PRIORITY")
     private ItemPriority itemPriority;
+    @Column(name = "HASH_TAG")
+    private String hashTag;
+    private boolean completed;
 
+    public Item() {}
+
+    public Item(Long id, @NotBlank String description, ItemPriority itemPriority, String hashTag, boolean completed) {
+        this.id = id;
+        this.description = description;
+        this.itemPriority = itemPriority;
+        this.hashTag = hashTag;
+        this.completed = completed;
+    }
 
     public Long getId() {
         return id;
@@ -36,12 +43,12 @@ public class Item {
         this.description = description;
     }
 
-    public String getSubmittedDate() {
-        return submittedDate;
+    public String getHashTag() {
+        return hashTag;
     }
 
-    public void setSubmittedDate(String submittedDate) {
-        this.submittedDate = submittedDate;
+    public void setHashTag(String hashTag) {
+        this.hashTag = hashTag;
     }
 
     public boolean isCompleted() {
