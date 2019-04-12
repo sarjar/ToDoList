@@ -59,36 +59,45 @@ public class ItemRepositoryTest {
     public void sortListByIdAsc() {
         List<Item> resultById = itemRepository.orderByIdAsc();
 
-        assertTrue(resultById.contains(testItemOne));
-//        assertTrue(resultById.contains(testItemTwo.equals(testItemTwo)));
-//        assertTrue(resultById.contains(testItemThree.equals(testItemThree)));
-
-//        assertEquals(resultById.get(0).getId(), testItemOne.getId());
-//        assertEquals(resultById.get(1).getId(), testItemTwo.getId());
-//        assertEquals(resultById.get(2).getId(), testItemThree.getId());
+        checkIfContains(resultById);
+        assertEquals(resultById.get(0).getId(), testItemOne.getId());
+        assertEquals(resultById.get(1).getId(), testItemTwo.getId());
+        assertEquals(resultById.get(2).getId(), testItemThree.getId());
     }
 
     @Test
     public void sortListByIdDesc() {
         List<Item> resultById = itemRepository.orderByIdDesc();
 
+        checkIfContains(resultById);
         assertEquals(resultById.get(0).getId(), testItemThree.getId());
         assertEquals(resultById.get(1).getId(), testItemTwo.getId());
         assertEquals(resultById.get(2).getId(),testItemOne.getId());
     }
 
     @Test
-    public void sortListByPriority() {
+    public void sortListByPriorityAsc() {
         List<Item> resultByPriority = itemRepository.orderByItemPriorityAsc();
 
+        checkIfContains(resultByPriority);
         assertEquals(ItemPriority.High, resultByPriority.get(0).getItemPriority());
         assertEquals(ItemPriority.Medium, resultByPriority.get(1).getItemPriority());
         assertEquals(ItemPriority.Low, resultByPriority.get(2).getItemPriority());
+    }
 
-        resultByPriority = itemRepository.orderByItemPriorityDesc();
+    @Test
+    public void sortListByPriorityDesc() {
+        List<Item> resultByPriority = itemRepository.orderByItemPriorityDesc();
 
+        checkIfContains(resultByPriority);
         assertEquals(ItemPriority.Low, resultByPriority.get(0).getItemPriority());
         assertEquals(ItemPriority.Medium, resultByPriority.get(1).getItemPriority());
         assertEquals(ItemPriority.High, resultByPriority.get(2).getItemPriority());
+    }
+
+    public void checkIfContains(List<Item> resultList) {
+        assertTrue(resultList.contains(testItemOne));
+        assertTrue(resultList.contains(testItemTwo));
+        assertTrue(resultList.contains(testItemThree));
     }
 }

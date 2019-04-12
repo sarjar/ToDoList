@@ -74,6 +74,4 @@ public class ToDoListServiceTest {
 //        Assert.assertFalse(itemOne.isPresent());
 //    }
 
-
-
 }

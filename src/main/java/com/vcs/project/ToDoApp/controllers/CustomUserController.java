@@ -28,17 +28,31 @@ public class CustomUserController {
         return itemList;
     }
 
-    @GetMapping("/sort/{ascending}")
-    public List<Item> sortList(@PathVariable("ascending") boolean ascending) {
+    @GetMapping("/sort/asc")
+    public List<Item> sortListAsc() {
         LOG.info("Started Sorting ToDo List");
-        List<Item> itemList = customService.sortListById(ascending);
+        List<Item> itemList = customService.sortListById(true);
         return itemList;
     }
 
-    @GetMapping("/sort/priority/{ascending}")
-    public List<Item> sortListByPriority(@PathVariable("ascending") boolean ascending) {
+    @GetMapping("/sort/desc")
+    public List<Item> sortListDesc() {
+        LOG.info("Started Sorting ToDo List");
+        List<Item> itemList = customService.sortListById(false);
+        return itemList;
+    }
+
+    @GetMapping("/sort/priority/asc")
+    public List<Item> sortListByPriorityAsc() {
         LOG.info("Started Sorting ToDo List By Priority");
-        List<Item> itemList = customService.sortListByItemPriority(ascending);
+        List<Item> itemList = customService.sortListByItemPriority(true);
+        return itemList;
+    }
+
+    @GetMapping("/sort/priority/desc")
+    public List<Item> sortListByPriorityDesc() {
+        LOG.info("Started Sorting ToDo List By Priority");
+        List<Item> itemList = customService.sortListByItemPriority(false);
         return itemList;
     }
 
@@ -50,11 +64,17 @@ public class CustomUserController {
         return updateItem;
     }
 
-    @DeleteMapping("/clean/completed/{onlyCompleted}/all/{allList}")
-    public ResponseEntity<Void> cleanItemList(@PathVariable("allList") boolean onlyCompleted,
-                                              @PathVariable("allList") boolean allList) {
-        LOG.info("Started Cleaning: OnlyCo");
-        customService.cleanItemList(onlyCompleted, allList);
+    @DeleteMapping("/clean/completed")
+    public ResponseEntity<Void> cleanCompleted() {
+        LOG.info("Started Cleaning: ONLY COMPLETED");
+        customService.cleanItemList(true, false);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/clean/all")
+    public ResponseEntity<Void> cleanAllItemList() {
+        LOG.info("Started Cleaning: ALL ITEM LIST");
+        customService.cleanItemList(true, true);
         return ResponseEntity.ok().build();
     }
 
