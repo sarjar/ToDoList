@@ -71,6 +71,8 @@ public class Item {
     @Override
     public boolean equals(Object obj) {
 
+        boolean idCoppy = false;
+        boolean descCoppy = false;
         boolean itemPriorityCoppy = false;
         boolean hashTagCoppy = false;
 
@@ -86,20 +88,31 @@ public class Item {
             // comparing the state of argument with
             // the state of 'this' Object.
 
-            if (item.itemPriority != null) {
-                itemPriorityCoppy = item.itemPriority.equals(item);
+            if (item.id != null) {
+                idCoppy = item.id.equals(item.id);
             } else {
-                itemPriorityCoppy = item.itemPriority == null && itemPriority == null;
+                idCoppy = item.id == id;
+            }
+
+            if (item.description != null) {
+                descCoppy = item.description.equals(item.description);
+            } else {
+                descCoppy = item.description == description;
+            }
+
+            if (item.itemPriority != null) {
+                itemPriorityCoppy = item.itemPriority.equals(item.itemPriority);
+            } else {
+                itemPriorityCoppy = item.itemPriority == itemPriority;
             }
 
             if (item.hashTag != null) {
-                hashTagCoppy = item.hashTag.equals(item);
+                hashTagCoppy = item.hashTag.equals(item.hashTag);
             } else {
-                hashTagCoppy = item.hashTag == null && hashTag == null;
+                hashTagCoppy = item.hashTag == hashTag;
             }
 
-            return ((item.id == this.id) && (item.description == this.description) &&
-                    itemPriorityCoppy && hashTagCoppy && (item.completed == this.completed));
+            return (idCoppy && descCoppy && itemPriorityCoppy && hashTagCoppy && (item.completed == this.completed));
         }
         return false;
     }
