@@ -43,7 +43,7 @@ public class ToDoListServiceTest {
         itemList.add(testItemTwo);
         Mockito.when(itemRepository.findById(testItemOne.getId())).thenReturn(Optional.of(testItemOne));
         Mockito.when(itemRepository.findById(testItemTwo.getId())).thenReturn(Optional.of(testItemTwo));
-//        Mockito.when(toDoListService.getAll()).thenReturn(itemList);
+        Mockito.when(toDoListService.getAll()).thenReturn(itemList);
     }
 
     @Test
@@ -61,17 +61,23 @@ public class ToDoListServiceTest {
         Assert.assertEquals("Item status changed to completed: true", itemOne.get().isCompleted(), true);
     }
 
-//    @Test
-//    public void cleanCompletedOrAllItems() {
-//        Optional<Item> itemOne = itemRepository.findById(1L);
-//        Assert.assertEquals(2, toDoListService.getAll().size());
-//
-//        toDoListService.cleanItemList(true, false);
-//        Assert.assertTrue(itemOne.isPresent());
-//
-//        itemOne.get().setCompleted(true);
-//        toDoListService.cleanItemList(true, false);
-//        Assert.assertFalse(itemOne.isPresent());
-//    }
+    @Test
+    public void removeCompletedItems() {
+        Optional<Item> itemOne = itemRepository.findById(1L);
+        Assert.assertEquals(2, toDoListService.getAll().size());
+
+        toDoListService.cleanItemList(true, false);
+        Assert.assertTrue(itemOne.isPresent());
+
+        itemOne.get().setCompleted(true);
+        toDoListService.cleanItemList(true, false);
+        Mockito.verify(itemRepository, Mockito.times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void cleanItemList() {
+        Assert.assertNotNull(toDoListService.getAll().size());
+        toDoListService.cleanItemList(false, true);
+    }
 
 }

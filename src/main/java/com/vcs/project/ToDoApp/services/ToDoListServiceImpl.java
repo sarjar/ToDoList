@@ -78,7 +78,7 @@ public class ToDoListServiceImpl implements IToDoListService {
         List<Item> itemList = getAll();
         for (Item item : itemList) {
             if (onlyCompleted && item.isCompleted() && !item.equals(null)) {
-                delete(item.getId());
+                 delete(item.getId());
             } else if (allList) {
                 deleteAll(itemList);
             }
