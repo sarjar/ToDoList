@@ -80,4 +80,10 @@ public class ToDoListServiceTest {
         toDoListService.cleanItemList(false, true);
     }
 
+    @Test
+    public void findByInvalidId() {
+        Optional<Item> item = toDoListService.findById(3L);
+        Assert.assertFalse(item.isPresent());
+    }
+
 }
